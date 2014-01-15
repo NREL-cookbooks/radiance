@@ -20,6 +20,11 @@ Simple recipe for installing Radiance
 * LWRP for installtion
 * general application testing
 * testing on centos
+* host support files somewhere else (github?) [these are take too long to download] 
+```
+src='http://www.radiance-online.org/software/non-cvs/rad4R1supp.tar.gz'
+dst='/tmp/radiance_build/ray/build/Downloads/Download/radiance_support/rad4R1supp.tar.gz'
+```
 
 # Author
 
