@@ -2,7 +2,7 @@
 # Cookbook Name:: radiance
 # Recipe:: default
 #
-# Copyright (C) 2014 YOUR_NAME
+# Copyright (C) 2014 Nicholas Long
 # 
 # All rights reserved - Do Not Redistribute
 #
@@ -10,15 +10,13 @@
 #radiance_version = node['radiance']['version']
 #major_version = r_version.split(".").first
 #
-## Command to check if we should be installing R or not.
+## Command to check if we should be installing
 is_installed_command = nil #"radiance --version | grep -q #{version}"
-                           #
-                           #package "gcc-gfortran"
-                           #
+
 include_recipe "ark"
 include_recipe "cmake"
-                           #
-                           ## install some extra packages to make this work right.
+                          
+# install some extra packages to make this work right.
 case node['platform_family']
   when "debian"
     # this is broken for centos 6.5 because kernel-devel isn't available??
@@ -66,6 +64,7 @@ template "/etc/profile.d/radiance.sh" do
   mode "0644"
 end
 
+# todo: extend ark to handle cmake based installations
 #ark "radiance" do
 #  name "radiance"
 #  version "1.1"

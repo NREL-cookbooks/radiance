@@ -11,6 +11,6 @@ depends "build-essential"
 depends "cmake"
 depends "apt"
 
-%w{ debian ubuntu centos redhat fedora }.each do |os|
+%w{ debian ubuntu }.each do |os|
   supports os
 end

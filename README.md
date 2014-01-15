@@ -4,9 +4,11 @@
 
 # Usage
 
-# Attributes
+Simple recipe for installing Radiance
 
 # Recipes
+
+`radiance::default`
 
 # Author
 

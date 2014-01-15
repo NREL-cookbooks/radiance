@@ -14,4 +14,5 @@ default['radiance']['support_file_url'] = "http://www.radiance-online.org/softwa
 default['radiance']['support_filename'] = "rad4R0supp.tar.gz" 
 
 
+# todo: eventually use git to download head and build
 #default['radiance']['git_url'] = "https://github.com/nrel/radiance"
