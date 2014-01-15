@@ -64,7 +64,6 @@ template "/etc/profile.d/radiance.sh" do
   mode "0644"
 end
 
-# todo: extend ark to handle cmake based installations
 #ark "radiance" do
 #  name "radiance"
 #  version "1.1"
