@@ -9,7 +9,7 @@
 
 #radiance_version = node['radiance']['version']
 #major_version = r_version.split(".").first
-#
+
 ## Command to check if we should be installing
 is_installed_command = nil #"radiance --version | grep -q #{version}"
 
@@ -37,11 +37,9 @@ if node['radiance']['install_method'] == "source"
 
     code <<-EOH
       wget #{node['radiance']['source_url']}/#{node['radiance']['source_filename']}
-      wget #{node['radiance']['support_file_url']}/#{node['radiance']['support_filename']}
       mkdir radiance_build
-      tar xzf #{node['radiance']['source_filename']} -C radiance_build   
-      tar xzf #{node['radiance']['support_filename']} -C radiance_build
-      
+      tar xzf #{node['radiance']['source_filename']} -C radiance_build
+
       # remove the pabopto2rad target
       sed -i 's/INSTALL(TARGETS pabopto2rad pabopto2bsdf)//' /tmp/radiance_build/ray/src/cv/CMakeLists.txt
 
@@ -53,7 +51,7 @@ if node['radiance']['install_method'] == "source"
       make install
     EOH
 
-    not_if { ::File.exists?("/tmp/#{package_name}") }
+    not_if { ::File.exists?("/#{node['radiance']['install_prefix']}/bin/rad") }
   end
 end
 

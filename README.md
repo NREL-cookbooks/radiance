@@ -17,10 +17,11 @@ Simple recipe for installing Radiance
 * update cmake to remove need for x11, qt, and outdated binaries
 * fix pabopto2rad (remove line `sed -i 's/INSTALL(TARGETS pabopto2rad pabopto2bsdf)//' /tmp/radiance_build/ray/src/cv/CMakeLists.txt`)
 * need to better handle versioning (stuck at 4.2.a in a non-unique directory)
-* LWRP for installtion
+* LWRP for installation including update/remove 
 * general application testing
 * testing on centos
-* host support files somewhere else (github?) [these are take too long to download] 
+* host support files somewhere else (github?) [these are taking too long to download] 
+
 
 ```
 src='http://www.radiance-online.org/software/non-cvs/rad4R1supp.tar.gz'
