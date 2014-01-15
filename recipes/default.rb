@@ -37,11 +37,9 @@ if node['radiance']['install_method'] == "source"
 
     code <<-EOH
       wget #{node['radiance']['source_url']}/#{node['radiance']['source_filename']}
-      wget #{node['radiance']['support_file_url']}/#{node['radiance']['support_filename']}
       mkdir radiance_build
-      tar xzf #{node['radiance']['source_filename']} -C radiance_build   
-      tar xzf #{node['radiance']['support_filename']} -C radiance_build
-      
+      tar xzf #{node['radiance']['source_filename']} -C radiance_build
+
       # remove the pabopto2rad target
       sed -i 's/INSTALL(TARGETS pabopto2rad pabopto2bsdf)//' /tmp/radiance_build/ray/src/cv/CMakeLists.txt
 
