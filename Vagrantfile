@@ -8,10 +8,11 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "http://dl.dropbox.com/u/1537815/precise64.box"
   #config.vm.box = "centos65-x86_64"
   #config.vm.box_url = "https://github.com/2creatives/vagrant-centos/releases/download/v6.5.1/centos65-x86_64-20131205.box"
+  
   config.vm.network :private_network, ip: "33.33.33.31"
-  #config.vm.network :forwarded_port, guest: 22, host: 2201
+  
+  config.vm.network :forwarded_port, guest: 22, host: 2205, id: "ssh"
   #config.vm.network :forwarded_port, guest: 80, host: 9001
-  config.vm.network :forwarded_port, guest: 27017, host: 10017
 
   config.berkshelf.enabled = true
   config.omnibus.chef_version = :latest
