@@ -47,7 +47,7 @@ if node['radiance']['install_method'] == "source"
       mkdir build
       cd build                      
       cmake -DCMAKE_INSTALL_PREFIX:PATH=#{node['radiance']['install_prefix']} ..
-      make
+      make -j2
       make install
     EOH
 
