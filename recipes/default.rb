@@ -36,17 +36,15 @@ if node['radiance']['install_method'] == "source"
     package_name = node['radiance']['source_filename']
 
     code <<-EOH
-      wget #{node['radiance']['source_url']}/#{node['radiance']['source_filename']}
-      mkdir -p radiance_build
-      tar xzf #{node['radiance']['source_filename']} -C radiance_build
+      wget #{node['radiance']['source_url']}/#{node['radiance']['version']}.tar.gz
+      tar xzf #{node['radiance']['version']} 
 
+      cd Radiance-#{node['radiance']['version']}    
+                
       # remove the pabopto2rad target
-      sed -i 's/INSTALL(TARGETS pabopto2rad pabopto2bsdf)//' /tmp/radiance_build/ray/src/cv/CMakeLists.txt
-
-      cd radiance_build/ray 
-      mkdir -p build
-      cd build                      
-      cmake -DCMAKE_INSTALL_PREFIX:PATH=#{node['radiance']['install_prefix']} ..
+      sed -i 's/INSTALL(TARGETS pabopto2rad pabopto2bsdf)//' ./src/cv/CMakeLists.txt
+                    
+      cmake -DCMAKE_INSTALL_PREFIX:PATH=#{node['radiance']['install_prefix']} .
       make -j2
       make install
     EOH
