@@ -37,9 +37,9 @@ if node['radiance']['install_method'] == "source"
 
     code <<-EOH
       wget #{node['radiance']['source_url']}/#{node['radiance']['version']}.tar.gz
-      tar xzf #{node['radiance']['version']} 
+      tar xzf #{node['radiance']['version']}.tar.gz 
 
-      cd Radiance-#{node['radiance']['version']}    
+      cd /tmp/Radiance-#{node['radiance']['version']}    
                 
       # remove the pabopto2rad target
       sed -i 's/INSTALL(TARGETS pabopto2rad pabopto2bsdf)//' ./src/cv/CMakeLists.txt
