@@ -36,7 +36,7 @@ if node['radiance']['install_method'] == "source"
     package_name = node['radiance']['source_filename']
 
     code <<-EOH
-      wget #{node['radiance']['source_url']}/#{node['radiance']['version']}.tar.gz
+      wget --no-check-certificate #{node['radiance']['source_url']}/#{node['radiance']['version']}.tar.gz
       tar xzf #{node['radiance']['version']}.tar.gz 
 
       cd /tmp/Radiance-#{node['radiance']['version']}    
