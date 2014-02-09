@@ -41,9 +41,6 @@ if node['radiance']['install_method'] == "source"
 
       cd /tmp/Radiance-#{node['radiance']['version']}    
                 
-      # remove the pabopto2rad target
-      sed -i 's/INSTALL(TARGETS pabopto2rad pabopto2bsdf)//' ./src/cv/CMakeLists.txt
-                    
       cmake -DCMAKE_INSTALL_PREFIX:PATH=#{node['radiance']['install_prefix']} .
       make -j2
       make install
