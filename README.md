@@ -15,12 +15,12 @@ Simple recipe for installing Radiance
 * need to convert this over to using Git and pull from github releaes
 * update ark to support cmake workflow (symlink binaries)
 * update cmake to remove need for x11, qt, and outdated binaries
-* fix pabopto2rad (remove line `sed -i 's/INSTALL(TARGETS pabopto2rad pabopto2bsdf)//' /tmp/radiance_build/ray/src/cv/CMakeLists.txt`)
+* ~~fix pabopto2rad (remove line `sed -i 's/INSTALL(TARGETS pabopto2rad pabopto2bsdf)//' /tmp/radiance_build/ray/src/cv/CMakeLists.txt`)~~ Done.
 * need to better handle versioning (stuck at 4.2.a in a non-unique directory)
 * LWRP for installation including update/remove 
 * general application testing
 * testing on centos
-* host support files somewhere else (github?) [these are taking too long to download] 
+* ~~host support files somewhere else (github?) [these are taking too long to download]~~ (Set BUILD_TESTING=OFF, not needed for headless operation 
 
 
 ```
