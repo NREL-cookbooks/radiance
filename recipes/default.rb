@@ -14,7 +14,8 @@
 is_installed_command = nil #"radiance --version | grep -q #{version}"
 
 include_recipe "ark"
-include_recipe "cmake"
+
+chef_gem "facter"
                           
 # install some extra packages to make this work right.
 case node['platform_family']
@@ -30,23 +31,24 @@ case node['platform_family']
 end
 
 if node['radiance']['install_method'] == "source"
-  bash "install radiance" do
-    cwd "/tmp"
+  require 'facter'
 
-    package_name = node['radiance']['source_filename']
-
-    code <<-EOH
-      wget --no-check-certificate #{node['radiance']['source_url']}/#{node['radiance']['version']}.tar.gz
-      tar xzf #{node['radiance']['version']}.tar.gz 
-
-      cd /tmp/Radiance-#{node['radiance']['version']}    
-                
-      cmake -DCMAKE_INSTALL_PREFIX:PATH=#{node['radiance']['install_prefix']} -DCMAKE_BUILD_TESTING=OFF .
-      make -j2
-      make install
-    EOH
-
-    not_if { ::File.exists?("/#{node['radiance']['install_prefix']}/bin/rad") }
+  # Check if the system has enough memory per core for the build process 
+  number_of_available_cores = Facter.processorcount.to_i - 1
+  number_of_available_cores = 1 if number_of_available_cores == 0
+  Chef::Log.info "Available Cores: #{number_of_available_cores}."
+  
+  if platform_family?("debian") || platform_family?("rhel")
+    ark "radiance" do
+      url "#{node['radiance']['source_url']}/#{node['radiance']['version']}.tar.gz"
+      version node['radiance']['version']
+      prefix_root '/usr/local'
+      cmake_opts ["-DCMAKE_INSTALL_PREFIX:PATH=#{node['radiance']['install_prefix']}", "-DCMAKE_BUILD_TESTING=OFF"]
+      make_opts ["-j#{number_of_available_cores}", "> build.log 2>&1"]
+      action :install_with_cmake
+    end
+  else
+    Chef::Log.warn("Building on a #{node['platform_family']} system is not yet not supported by this cookbook")
   end
 end
 
@@ -56,15 +58,3 @@ template "/etc/profile.d/radiance.sh" do
   group "root"
   mode "0644"
 end
-
-#ark "radiance" do
-#  name "radiance"
-#  version "1.1"
-#  url node['radiance']['url']
-#  autoconf_opts node['radiance']['config_opts'] if node['radiance']['config_opts']
-#
-#  action :install_with_cmake
-#
-## This is skipped if the url/path exists
-#  not_if is_installed_command
-#end
