@@ -40,7 +40,8 @@ if node['radiance']['install_method'] == "source"
   
   if platform_family?("debian") || platform_family?("rhel")
     ark "radiance" do
-      url "#{node['radiance']['source_url']}/#{node['radiance']['version']}.tar.gz"
+      url "#{node['radiance']['source_url']}/#{node['radiance']['version']}"
+      extension "zip"
       version node['radiance']['version']
       prefix_root '/usr/local'
       cmake_opts ["-DCMAKE_INSTALL_PREFIX:PATH=#{node['radiance']['install_prefix']}", "-DCMAKE_BUILD_TESTING=OFF"]
