@@ -34,7 +34,7 @@ if node['radiance']['install_method'] == "source"
   require 'facter'
 
   # Check if the system has enough memory per core for the build process 
-  number_of_available_cores = Facter.processorcount.to_i - 1
+  number_of_available_cores = Facter.fact(:processorcount).value.to_i - 1
   number_of_available_cores = 1 if number_of_available_cores == 0
   Chef::Log.info "Available Cores: #{number_of_available_cores}."
   
