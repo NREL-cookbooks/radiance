@@ -44,7 +44,7 @@ if node['radiance']['install_method'] == "source"
       extension "zip"
       version node['radiance']['version']
       prefix_root '/usr/local'
-      cmake_opts ["-DCMAKE_INSTALL_PREFIX:PATH=#{node['radiance']['install_prefix']}", "-DCMAKE_BUILD_TESTING=OFF"]
+      cmake_opts ["-DCMAKE_INSTALL_PREFIX:PATH=#{node['radiance']['install_prefix']}", "-DCMAKE_BUILD_TESTING=OFF", "DCMAKE_BUILD_HEADLESS=ON"]
       make_opts ["-j#{number_of_available_cores}", "> build.log 2>&1"]
       action :install_with_cmake
     end
