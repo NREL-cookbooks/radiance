@@ -27,9 +27,12 @@ Vagrant.configure('2') do |config|
   end
 
   config.vm.provision :chef_solo do |chef|
-    chef.log_level = :debug
-    # chef.json = {
-    # }
+    chef.log_level = :info
+    chef.json = {
+      radiance: {
+        version: '5.0.a.6'
+      }
+    }
 
     chef.add_recipe('radiance')
   end
