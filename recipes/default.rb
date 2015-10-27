@@ -2,9 +2,7 @@
 # Cookbook Name:: radiance
 # Recipe:: default
 #
-# Copyright (C) 2014 Nicholas Long
-#
-# All rights reserved - Do Not Redistribute
+# Copyright (C) 2015 Nicholas Long
 #
 
 # radiance_version = node['radiance']['version']
@@ -20,14 +18,17 @@ chef_gem 'facter'
 # install some extra packages to make this work right.
 case node['platform_family']
 when 'debian'
-  # this is broken for centos 6.5 because kernel-devel isn't available??
   include_recipe 'apt::default'
   include_recipe 'build-essential'
-  package 'libqt4-core'
-  package 'libqt4-dev'
-  package 'libx11-dev'
+  package 'libtiff5-dev'
+
+  # install opengl
+  package 'libglu1-mesa-dev'
+  package 'freeglut3-dev'
+  package 'mesa-common-dev'
+
 when 'rhel'
-  package 'qt'
+
 end
 
 if node['radiance']['install_method'] == 'source'
@@ -38,13 +39,15 @@ if node['radiance']['install_method'] == 'source'
   number_of_available_cores = 1 if number_of_available_cores == 0
   Chef::Log.info "Available Cores: #{number_of_available_cores}."
 
+  download_url = "#{node['radiance']['source_url']}/#{node['radiance']['version']}"
+
   if platform_family?('debian') || platform_family?('rhel')
     ark 'radiance' do
-      url "#{node['radiance']['source_url']}/#{node['radiance']['version']}"
+      url download_url
       extension 'zip'
       version node['radiance']['version']
       prefix_root '/usr/local'
-      cmake_opts ["-DCMAKE_INSTALL_PREFIX:PATH=#{node['radiance']['install_prefix']}", '-DCMAKE_BUILD_TESTING=OFF', 'DCMAKE_BUILD_HEADLESS=ON']
+      cmake_opts ["-DCMAKE_INSTALL_PREFIX:PATH=#{node['radiance']['install_prefix']}", '-DBUILD_TESTING=OFF', '-DBUILD_HEADLESS=ON', '-DBUILD_PACKAGE=OFF']
       make_opts ["-j#{number_of_available_cores}", '> build.log 2>&1']
       action :install_with_cmake
     end

@@ -16,6 +16,8 @@ Vagrant.configure('2') do |config|
   config.berkshelf.enabled = true
   config.omnibus.chef_version = :latest
 
+  # config.vm.synced_folder "../radiance-src", "/usr/local/radiance-src"
+
   config.vm.provider :virtualbox do |vb|
     # Use VBoxManage to customize the VM. For example to change memory:
     vb.customize ['modifyvm', :id, '--memory', 1024, '--cpus', 2]
@@ -28,9 +30,19 @@ Vagrant.configure('2') do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.log_level = :info
+
+    # Build a release
+    # chef.json = {
+    #   radiance: {
+    #     version: '5.0.a.6'
+    #   }
+    # }
+
+    # Build a specific commit
     chef.json = {
       radiance: {
-        version: '5.0.a.6'
+        source_url: 'https://github.com/NREL/Radiance/archive',
+        version: 'fix-headless.zip'
       }
     }
 
